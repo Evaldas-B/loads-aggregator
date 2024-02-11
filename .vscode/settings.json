@@ -6,5 +6,12 @@
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
-  "cSpell.words": ["openai", "supabase"]
+  "cSpell.words": [
+    "geocoded",
+    "Geocodes",
+    "georoute",
+    "georouter",
+    "openai",
+    "supabase"
+  ]
 }

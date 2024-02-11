@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npx supabase start",
-    "stop": "npx supabase stop"
+    "stop": "npx supabase stop",
+    "gen:types": "npx supabase gen types typescript --local --schema public > supabase/functions/databaseTypes.ts"
   },
   "keywords": [],
   "author": "",

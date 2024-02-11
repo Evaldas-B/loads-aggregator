@@ -1,11 +1,11 @@
 import { ChatCompletionTool } from "https://deno.land/x/openai@v4.26.0/resources/mod.ts";
 import z from "https://deno.land/x/zod@v3.22.4/index.ts";
 
-export const parseLoadTool: ChatCompletionTool = {
+export const extractLoadTool: ChatCompletionTool = {
   type: "function",
   function: {
-    name: "parseLoad",
-    description: "Parse loading information from text",
+    name: "extractLoad",
+    description: "extract loading information from text",
     parameters: {
       type: "object",
       properties: {
@@ -47,7 +47,7 @@ export const parseLoadTool: ChatCompletionTool = {
           },
         },
 
-        prices: {
+        shipping_prices: {
           type: "array",
           description: "Shipping price",
           items: {
@@ -60,17 +60,20 @@ export const parseLoadTool: ChatCompletionTool = {
   },
 } as const;
 
-const location = z.object({
+export const locationSchema = z.object({
   city: z.string().optional(),
   country: z.string().optional(),
   postcode: z.string().optional(),
 });
 
+export type LocationSchema = z.infer<typeof locationSchema>;
+
 export const loadSchema = z.object({
-  pickup: z.array(location),
-  delivery: z.array(location),
+  pickup: z.array(locationSchema),
+  delivery: z.array(locationSchema),
 
   load_factors: z.array(z.number()).optional(),
-}).nullable().catch(null);
+  shipping_prices: z.array(z.number()).optional(),
+});
 
 export type LoadSchema = z.infer<typeof loadSchema>;

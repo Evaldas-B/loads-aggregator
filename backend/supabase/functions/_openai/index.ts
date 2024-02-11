@@ -1,5 +1,5 @@
 import OpenAI from "https://deno.land/x/openai@v4.26.0/mod.ts";
-import { env } from "../_env/utils.ts";
+import { env } from "../_utils/env.ts";
 
 const apiKey = env.openAI.key;
 
