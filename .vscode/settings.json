@@ -4,14 +4,18 @@
   "deno.codeLens.test": true,
   "deno.unstable": true,
   "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.words": [
     "geocoded",
     "Geocodes",
     "georoute",
     "georouter",
+    "mantine",
     "openai",
-    "supabase"
+    "signin",
+    "signup",
+    "supabase",
+    "tabler"
   ]
 }
