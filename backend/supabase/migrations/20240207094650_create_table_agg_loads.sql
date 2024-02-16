@@ -12,8 +12,8 @@ CREATE TABLE agg_loads (
     company VARCHAR(256),
 
     -- Metadata
-    is_deleted BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     created_by UUID DEFAULT auth.uid()
 );
 

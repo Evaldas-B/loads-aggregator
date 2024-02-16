@@ -16,7 +16,7 @@ export async function NavBar() {
   } = await supabase.auth.getUser()
 
   return (
-    <nav className="h-14 border-b px-4">
+    <nav className="min-h-14 border-b px-4">
       <Group justify="space-between" h="100%">
         <Logo className="hidden md:block" />
 

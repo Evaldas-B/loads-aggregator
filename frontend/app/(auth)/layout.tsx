@@ -21,9 +21,11 @@ export default async function AnonLayout({
   await redirectAuthenticatedUsers()
 
   return (
-    <>
+    <div className="flex h-screen flex-col overflow-hidden">
       <NavBar />
-      <div className="p-3">{children}</div>
-    </>
+      <main className="flex flex-grow flex-col overflow-hidden p-3">
+        {children}
+      </main>
+    </div>
   )
 }
