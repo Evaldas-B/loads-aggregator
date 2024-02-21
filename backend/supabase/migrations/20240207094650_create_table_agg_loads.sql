@@ -42,7 +42,7 @@ USING (is_deleted = FALSE);
 -- Computed field(virtual column) that returns path in lng,lat format
 CREATE FUNCTION route_coordinates(agg_loads)
 RETURNS jsonb AS $$
-  SELECT (jsonb(ST_AsGeoJSON($1.route))) -> 'route_coordinates'
+  SELECT (jsonb(ST_AsGeoJSON($1.route))) -> 'coordinates'
   FROM agg_loads;
 $$
 LANGUAGE SQL;

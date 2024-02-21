@@ -5,14 +5,14 @@ import { Avatar, UnstyledButton, Group, Text, Menu } from '@mantine/core'
 import { IconChevronDown } from '@tabler/icons-react'
 import { IconLogout, IconSettings } from '@tabler/icons-react'
 import { User } from '@supabase/supabase-js'
-import { createClient } from '@/utils/supabase/client'
+import { supabaseClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 
 type Props = {
   user: User
 }
 
-const supabase = createClient()
+const supabase = supabaseClient()
 
 export default function UserProfile({ user }: Props) {
   const [, setUserMenuOpened] = useState(false)

@@ -565,6 +565,37 @@ export interface Database {
         }
         Returns: boolean
       }
+      filter_loads_by_path_radius: {
+        Args: {
+          path?: string
+          radius?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
+      filter_loads_by_pickup_delivery_radius: {
+        Args: {
+          pickup_center?: string
+          pickup_radius?: number
+          delivery_center?: string
+          delivery_radius?: number
+          page_number?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
+      filter_locations_by_radius: {
+        Args: {
+          location_type: Database["public"]["Enums"]["location_type"]
+          center?: string
+          radius?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
       geography:
         | {
             Args: {

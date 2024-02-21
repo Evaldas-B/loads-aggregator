@@ -4,12 +4,12 @@ import Logo from './Logo'
 import NavLink from './NavLink'
 import MobileMenu from './MobileMenu'
 import UserProfile from './UserProfile'
-import { createClient } from '@/utils/supabase/server'
+import { supabaseClient } from '@/utils/supabase/client'
 import { cookies } from 'next/headers'
 
 export async function NavBar() {
   const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = supabaseClient(cookieStore)
 
   const {
     data: { user },
