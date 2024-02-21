@@ -11,8 +11,8 @@ CREATE TABLE agg_locations (
     load_id UUID REFERENCES agg_loads(id) ON DELETE CASCADE NOT NULL,
     type location_type NOT NULL,
 
-    is_deleted BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     created_by UUID DEFAULT auth.uid()
 );
 

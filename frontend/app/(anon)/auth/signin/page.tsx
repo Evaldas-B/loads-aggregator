@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
+import { supabaseClient } from '@/utils/supabase/client'
 import {
   TextInput,
   PasswordInput,
@@ -26,7 +26,7 @@ export default function SignIn() {
 
   const [authError, setAuthError] = useState<string | null>(null)
 
-  const supabase = createClient()
+  const supabase = supabaseClient()
 
   const form = useForm({
     initialValues: {

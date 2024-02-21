@@ -12,25 +12,26 @@ export interface Database {
       agg_loads: {
         Row: {
           company: string | null
-          created_at: string | null
+          created_at: string
           created_by: string | null
           distance: number
           emails: string[] | null
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           load_factors: number[] | null
           phones: string[] | null
           route: unknown
           shipping_prices: number[] | null
+          route_coordinates: Json | null
         }
         Insert: {
           company?: string | null
-          created_at?: string | null
+          created_at?: string
           created_by?: string | null
           distance: number
           emails?: string[] | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           load_factors?: number[] | null
           phones?: string[] | null
           route: unknown
@@ -38,12 +39,12 @@ export interface Database {
         }
         Update: {
           company?: string | null
-          created_at?: string | null
+          created_at?: string
           created_by?: string | null
           distance?: number
           emails?: string[] | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           load_factors?: number[] | null
           phones?: string[] | null
           route?: unknown
@@ -56,22 +57,24 @@ export interface Database {
           city: string | null
           coordinates: unknown
           country: string
-          created_at: string | null
+          created_at: string
           created_by: string | null
           id: string
-          is_deleted: boolean | null
+          is_deleted: boolean
           load_id: string
           postcode: string | null
           type: Database["public"]["Enums"]["location_type"]
+          lat: number | null
+          lng: number | null
         }
         Insert: {
           city?: string | null
           coordinates: unknown
           country: string
-          created_at?: string | null
+          created_at?: string
           created_by?: string | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           load_id: string
           postcode?: string | null
           type: Database["public"]["Enums"]["location_type"]
@@ -80,10 +83,10 @@ export interface Database {
           city?: string | null
           coordinates?: unknown
           country?: string
-          created_at?: string | null
+          created_at?: string
           created_by?: string | null
           id?: string
-          is_deleted?: boolean | null
+          is_deleted?: boolean
           load_id?: string
           postcode?: string | null
           type?: Database["public"]["Enums"]["location_type"]
@@ -562,6 +565,37 @@ export interface Database {
         }
         Returns: boolean
       }
+      filter_loads_by_path_radius: {
+        Args: {
+          path?: string
+          radius?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
+      filter_loads_by_pickup_delivery_radius: {
+        Args: {
+          pickup_center?: string
+          pickup_radius?: number
+          delivery_center?: string
+          delivery_radius?: number
+          page_number?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
+      filter_locations_by_radius: {
+        Args: {
+          location_type: Database["public"]["Enums"]["location_type"]
+          center?: string
+          radius?: number
+        }
+        Returns: {
+          load_id: string
+        }[]
+      }
       geography:
         | {
             Args: {
@@ -1001,6 +1035,18 @@ export interface Database {
         }
         Returns: Json
       }
+      lat: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      lng: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
       longtransactionsenabled: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -1262,6 +1308,12 @@ export interface Database {
       postgis_wagyu_version: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      route_coordinates: {
+        Args: {
+          "": unknown
+        }
+        Returns: Json
       }
       spheroid_in: {
         Args: {
