@@ -1,7 +1,6 @@
 import getFilteredLoads from '@/utils/supabase/queries/getFilteredLoads'
 import { cookies } from 'next/headers'
 import LoadCard from './LoadCard'
-import { Pagination } from '@mantine/core'
 import LoadFilters from './Filters'
 import LoadsMap from './LoadsMap'
 import { supabaseClient } from '@/utils/supabase/client'
@@ -26,7 +25,7 @@ export default async function Home({ searchParams }: Props) {
         <div className="flex flex-col gap-3 md:overflow-y-auto">
           {loads?.map((load) => <LoadCard key={load.id} load={load} />)}
 
-          <Pagination total={10} className="mx-auto my-5" size="md" />
+          {/* <Pagination total={10} className="mx-auto my-5" size="md" /> */}
         </div>
       </div>
     </div>

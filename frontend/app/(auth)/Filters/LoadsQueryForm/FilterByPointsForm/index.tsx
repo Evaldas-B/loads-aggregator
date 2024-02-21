@@ -9,8 +9,8 @@ import {
 } from './formContext'
 import PlaceAutocomplete from '../PlaceAutocomplete'
 import * as qs from 'qs'
-import { useRouter } from 'next/navigation'
-import { LoadsQueryByPoints } from './schema'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { LoadsQueryByPoints, loadsQueryByPointsSchema } from './schema'
 
 type Props = {
   classNames?: string
@@ -18,8 +18,16 @@ type Props = {
 
 export default function FilterByPointsForm({ classNames = '' }: Props) {
   const router = useRouter()
+
+  const searchParams = useSearchParams()
+  const searchQuery = qs.parse(searchParams.toString()).search
+  const initialValues = loadsQueryByPointsSchema
+    .nullable()
+    .catch(null)
+    .parse(searchQuery)
+
   const form = useLoadsQueryByPointsForm({
-    initialValues: initialLoadsQueryByPoints,
+    initialValues: initialValues || initialLoadsQueryByPoints,
   })
 
   const submitForm = (values: LoadsQueryByPoints) => {
@@ -73,13 +81,6 @@ export default function FilterByPointsForm({ classNames = '' }: Props) {
           <Button type="submit">Filter</Button>
         </div>
       </form>
-
-      {/* TODO DELETE AFTER DONE TESTING */}
-      {/* <div className="absolute bottom-10 right-0 top-10 h-screen w-1/2 border-4 border-green-500 bg-white">
-        <pre className="whitespace-pre-wrap rounded-xl border p-3">
-          <code>{JSON.stringify(form.values, null, 2)}</code>
-        </pre>
-      </div> */}
     </LoadsQueryByPointsFormProvider>
   )
 }

@@ -8,10 +8,10 @@ import {
   useLoadsQueryByPathForm,
 } from './formContext'
 import PlaceAutocomplete from '../PlaceAutocomplete'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import * as qs from 'qs'
 import { getDirections } from '@/utils/mapbox/getDirections'
-import { LoadsQueryByPath } from './schema'
+import { LoadsQueryByPath, loadsQueryByPathSchema } from './schema'
 
 type Props = {
   classNames?: string
@@ -19,8 +19,18 @@ type Props = {
 
 export default function FilterByPathsForm({ classNames = '' }: Props) {
   const router = useRouter()
+
+  const searchParams = useSearchParams()
+  const searchQuery = qs.parse(searchParams.toString(), {
+    arrayLimit: 3000,
+  }).search
+  const initialValues = loadsQueryByPathSchema
+    .nullable()
+    .catch(null)
+    .parse(searchQuery)
+
   const form = useLoadsQueryByPathForm({
-    initialValues: initialLoadsQueryByPath,
+    initialValues: initialValues || initialLoadsQueryByPath,
   })
 
   const submitForm = async (values: LoadsQueryByPath) => {
@@ -79,13 +89,6 @@ export default function FilterByPathsForm({ classNames = '' }: Props) {
           <Button type="submit">Filter</Button>
         </div>
       </form>
-
-      {/* TODO DELETE AFTER DONE TESTING */}
-      {/* <div className="absolute bottom-10 right-0 top-10 h-screen w-1/2 border-4 border-red-500 bg-white">
-        <pre className="whitespace-pre-wrap rounded-xl border p-3">
-          <code>{JSON.stringify(form.values, null, 2)}</code>
-        </pre>
-      </div> */}
     </LoadsQueryByPathFormProvider>
   )
 }

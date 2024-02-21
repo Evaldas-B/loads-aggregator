@@ -1,38 +1,53 @@
 'use client'
 
-import { Button } from '@mantine/core'
+import { Center, SegmentedControl } from '@mantine/core'
 import { IconMapPins, IconRoute } from '@tabler/icons-react'
 import FilterByPointsForm from './FilterByPointsForm'
 import FilterByPathForm from './FilterByPathForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 export default function LoadsQueryForm() {
-  const [formType, setFormType] = useState<'byPoints' | 'byPath'>('byPoints')
+  const [formType, setFormType] = useState('byPoints')
+
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    setFormType(searchParams.get('search[queryType]') || 'byPoints')
+  }, [searchParams])
+
+  const segments = [
+    {
+      value: 'byPoints',
+      label: (
+        <Center style={{ gap: 10 }}>
+          <IconMapPins />
+          <span>By Points</span>
+        </Center>
+      ),
+    },
+    {
+      value: 'byPath',
+      label: (
+        <Center style={{ gap: 10 }}>
+          <IconRoute />
+          <span>By Path</span>
+        </Center>
+      ),
+    },
+  ]
 
   return (
-    <div className="flex gap-3">
-      <div className="flex flex-col gap-3">
-        {/* Form type toggler */}
-        <Button
-          variant={formType === 'byPoints' ? 'filled' : 'light'}
-          onClick={() => setFormType('byPoints')}
-        >
-          <IconMapPins className="-ml-0.5 mr-1" /> By Points
-        </Button>
-        <Button
-          variant={formType === 'byPath' ? 'filled' : 'light'}
-          onClick={() => setFormType('byPath')}
-        >
-          <IconRoute className="-ml-0.5 mr-1" /> By Path
-        </Button>
-      </div>
+    <div className="flex flex-col gap-3">
+      <SegmentedControl
+        color="blue"
+        className="mx-auto"
+        value={formType}
+        onChange={setFormType}
+        data={segments}
+      />
 
-      {/* Form */}
-      {formType === 'byPoints' ? (
-        <FilterByPointsForm classNames="flex-grow" />
-      ) : (
-        <FilterByPathForm classNames="flex-grow" />
-      )}
+      {formType === 'byPoints' ? <FilterByPointsForm /> : <FilterByPathForm />}
     </div>
   )
 }
