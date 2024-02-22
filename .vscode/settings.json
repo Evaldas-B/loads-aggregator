@@ -18,5 +18,10 @@
     "signup",
     "supabase",
     "tabler"
-  ]
+  ],
+  "excalidraw.image": {
+    "exportScale": 1,
+    "exportWithBackground": false,
+    "exportWithDarkMode": true
+  }
 }
