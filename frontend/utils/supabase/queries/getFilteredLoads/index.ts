@@ -28,6 +28,7 @@ export default async function getFilteredLoads({
     )
     .eq('pickup.type', 'pickup')
     .eq('delivery.type', 'delivery')
+    .order('created_at', { ascending: false })
 
   // Filter by pickup/delivery points
   const { data: filteredByPoints } = await filterByPoints({
