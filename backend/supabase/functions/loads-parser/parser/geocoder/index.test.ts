@@ -1,14 +1,14 @@
 import { getLoadMock } from "../openaiParser/extractLoadTool/tests/mocks.ts";
 
 import { assertEquals } from "https://deno.land/std@0.213.0/assert/assert_equals.ts";
-import { geocoder } from "./index.ts";
+import { geocodeLoads } from "./index.ts";
 
 Deno.test("Aachen -> Hannover", async () => {
   const { loadMock: loadMock, coordinatesMock: coordinatesMock } = getLoadMock(
     "Aachen -> Hannover",
   );
 
-  const geocodedLoads = await geocoder([loadMock]);
+  const geocodedLoads = await geocodeLoads([loadMock]);
 
   assertEquals(geocodedLoads.length, 1);
   const [load1] = geocodedLoads;
@@ -23,7 +23,7 @@ Deno.test("Aachen -> Hannover", async () => {
 Deno.test("Aachen -> FR", async () => {
   const { loadMock } = getLoadMock("Aachen -> FR");
 
-  const geocodedLoads = await geocoder([loadMock]);
+  const geocodedLoads = await geocodeLoads([loadMock]);
 
   // Country is too broad geographical term, hence should not be geocoded
   assertEquals(geocodedLoads.length, 0);
@@ -34,7 +34,7 @@ Deno.test("Aachen, DE-52070 -> Hannover, DE-30177", async () => {
     "Aachen, DE-52070 -> Hannover, DE-30177",
   );
 
-  const geocodedLoads = await geocoder([loadMock]);
+  const geocodedLoads = await geocodeLoads([loadMock]);
 
   assertEquals(geocodedLoads.length, 1);
   const [load1] = geocodedLoads;
