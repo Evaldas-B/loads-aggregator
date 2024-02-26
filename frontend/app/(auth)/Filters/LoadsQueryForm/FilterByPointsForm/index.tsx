@@ -4,35 +4,45 @@ import { Button } from '@mantine/core'
 import RadiusSlider from '../RadiusSlider'
 import {
   LoadsQueryByPointsFormProvider,
-  initialLoadsQueryByPoints,
   useLoadsQueryByPointsForm,
+  validate,
 } from './formContext'
 import PlaceAutocomplete from '../PlaceAutocomplete'
-import * as qs from 'qs'
+import qs from 'qs'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { LoadsQueryByPoints, loadsQueryByPointsSchema } from './schema'
+import {
+  LoadsQueryByPoints,
+  emptyForm,
+  getFormValuesFromSearchParams,
+} from './schema'
+import { useEffect, useState } from 'react'
 
 type Props = {
   classNames?: string
 }
 
 export default function FilterByPointsForm({ classNames = '' }: Props) {
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const searchParams = useSearchParams()
-  const searchQuery = qs.parse(searchParams.toString()).search
-  const initialValues = loadsQueryByPointsSchema
-    .nullable()
-    .catch(null)
-    .parse(searchQuery)
+
+  useEffect(() => {
+    form.setValues(getFormValuesFromSearchParams(searchParams))
+  }, [searchParams])
 
   const form = useLoadsQueryByPointsForm({
-    initialValues: initialValues || initialLoadsQueryByPoints,
+    initialValues: emptyForm,
+    validate,
   })
 
   const submitForm = (values: LoadsQueryByPoints) => {
+    setIsLoading(true)
+
     const stringified = qs.stringify({ search: values })
     router.push(`/?${stringified}`)
+
+    setIsLoading(false)
   }
 
   return (
@@ -78,7 +88,9 @@ export default function FilterByPointsForm({ classNames = '' }: Props) {
           >
             Clear
           </Button>
-          <Button type="submit">Filter</Button>
+          <Button type="submit" loading={isLoading}>
+            Filter
+          </Button>
         </div>
       </form>
     </LoadsQueryByPointsFormProvider>

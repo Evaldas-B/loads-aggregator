@@ -4,6 +4,7 @@ import LoadCard from './LoadCard'
 import LoadFilters from './Filters'
 import LoadsMap from './LoadsMap'
 import { supabaseClient } from '@/utils/supabase/client'
+import NothingFound from './NothingFound'
 
 type Props = {
   searchParams: Record<string, string>
@@ -23,8 +24,11 @@ export default async function Home({ searchParams }: Props) {
       <div className="flex flex-col gap-3 md:w-1/2 md:overflow-hidden">
         <LoadFilters />
         <div className="flex flex-col gap-3 md:overflow-y-auto">
-          {loads?.map((load) => <LoadCard key={load.id} load={load} />)}
-
+          {loads?.length ? (
+            loads?.map((load) => <LoadCard key={load.id} load={load} />)
+          ) : (
+            <NothingFound className="mx-auto mt-10" />
+          )}
           {/* <Pagination total={10} className="mx-auto my-5" size="md" /> */}
         </div>
       </div>
