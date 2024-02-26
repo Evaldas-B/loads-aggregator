@@ -47,6 +47,7 @@ export default function UserProfile({ user }: Props) {
             leftSection={
               <IconSettings className="h-4 w-4 stroke-2 text-blue-500" />
             }
+            className="!cursor-not-allowed"
           >
             Account settings
           </Menu.Item>

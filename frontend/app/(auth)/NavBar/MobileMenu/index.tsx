@@ -26,7 +26,9 @@ export default function MobileMenu() {
           <Divider className="mb-2" />
 
           <NavLink href="/">Loads</NavLink>
-          <NavLink href="/transporters">Transporters</NavLink>
+          <NavLink href="/transporters" disabled>
+            Transporters
+          </NavLink>
         </ScrollArea>
       </Drawer>
     </>

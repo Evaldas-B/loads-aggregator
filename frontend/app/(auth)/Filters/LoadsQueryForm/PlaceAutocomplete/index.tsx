@@ -76,7 +76,7 @@ export default function PlaceAutocomplete({
       <Combobox.Target>
         <TextInput
           label={label}
-          value={inputPropsInputText?.value}
+          {...inputPropsInputText}
           onChange={async (event) => {
             const value = event.currentTarget.value
 

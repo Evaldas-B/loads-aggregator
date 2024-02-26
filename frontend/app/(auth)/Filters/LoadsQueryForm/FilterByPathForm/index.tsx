@@ -4,36 +4,42 @@ import { Button } from '@mantine/core'
 import RadiusSlider from '../RadiusSlider'
 import {
   LoadsQueryByPathFormProvider,
-  initialLoadsQueryByPath,
   useLoadsQueryByPathForm,
+  validate,
 } from './formContext'
 import PlaceAutocomplete from '../PlaceAutocomplete'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as qs from 'qs'
 import { getDirections } from '@/utils/mapbox/getDirections'
-import { LoadsQueryByPath, loadsQueryByPathSchema } from './schema'
+import {
+  LoadsQueryByPath,
+  emptyForm,
+  getFormValuesFromSearchParams,
+} from './schema'
+import { useEffect, useState } from 'react'
 
 type Props = {
   classNames?: string
 }
 
 export default function FilterByPathsForm({ classNames = '' }: Props) {
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const searchParams = useSearchParams()
-  const searchQuery = qs.parse(searchParams.toString(), {
-    arrayLimit: 3000,
-  }).search
-  const initialValues = loadsQueryByPathSchema
-    .nullable()
-    .catch(null)
-    .parse(searchQuery)
+
+  useEffect(() => {
+    form.setValues(getFormValuesFromSearchParams(searchParams))
+  }, [searchParams])
 
   const form = useLoadsQueryByPathForm({
-    initialValues: initialValues || initialLoadsQueryByPath,
+    initialValues: emptyForm,
+    validate,
   })
 
   const submitForm = async (values: LoadsQueryByPath) => {
+    setIsLoading(true)
+
     const waypoints = form.values.waypoints.map((loc) => {
       const lng = loc.coordinates!.lng
       const lat = loc.coordinates!.lat
@@ -47,6 +53,7 @@ export default function FilterByPathsForm({ classNames = '' }: Props) {
 
     const stringified = qs.stringify({ search: { ...values, path } })
     router.push(`/?${stringified}`)
+    setIsLoading(false)
   }
 
   return (
@@ -86,7 +93,9 @@ export default function FilterByPathsForm({ classNames = '' }: Props) {
           >
             Clear
           </Button>
-          <Button type="submit">Filter</Button>
+          <Button type="submit" loading={isLoading}>
+            Filter
+          </Button>
         </div>
       </form>
     </LoadsQueryByPathFormProvider>

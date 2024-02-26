@@ -22,7 +22,9 @@ export async function NavBar() {
 
         <Group h="100%" gap={0} visibleFrom="sm">
           <NavLink href="/">Loads</NavLink>
-          <NavLink href="/transporters">Transporters</NavLink>
+          <NavLink href="/transporters" disabled>
+            Transporters
+          </NavLink>
         </Group>
 
         <MobileMenu />

@@ -23,6 +23,7 @@ const iconExclamationMark = <IconExclamationCircle />
 
 export default function SignUp() {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const [authError, setAuthError] = useState<string | null>(null)
 
@@ -37,6 +38,7 @@ export default function SignUp() {
 
   type FormValues = typeof form.values
   const signUp = async ({ email, password }: FormValues) => {
+    setIsLoading(true)
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -49,6 +51,8 @@ export default function SignUp() {
       setAuthError(null)
       router.push('/')
     }
+
+    setIsLoading(false)
   }
 
   return (
@@ -83,7 +87,7 @@ export default function SignUp() {
             <Checkbox label="Remember me" />
           </Group>
 
-          <Button type="submit" fullWidth mt="xl">
+          <Button type="submit" fullWidth mt="xl" loading={isLoading}>
             Sign up
           </Button>
         </Paper>

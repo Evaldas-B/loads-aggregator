@@ -25,6 +25,7 @@ export default function SignIn() {
   const router = useRouter()
 
   const [authError, setAuthError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const supabase = supabaseClient()
 
@@ -37,6 +38,7 @@ export default function SignIn() {
 
   type FormValues = typeof form.values
   const signIn = async ({ email, password }: FormValues) => {
+    setIsLoading(true)
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -49,6 +51,7 @@ export default function SignIn() {
       setAuthError(null)
       router.push('/')
     }
+    setIsLoading(false)
   }
 
   return (
@@ -86,7 +89,7 @@ export default function SignIn() {
           </Anchor> */}
           </Group>
 
-          <Button type="submit" fullWidth mt="xl">
+          <Button type="submit" fullWidth mt="xl" loading={isLoading}>
             Sign in
           </Button>
         </Paper>
